@@ -1,4 +1,5 @@
 using IMDB.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 internal class Program
 {
@@ -7,9 +8,16 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        var connectionString = builder.Configuration.GetConnectionString("IMDBContext") ?? throw new InvalidOperationException("Connection string 'IMDBContext' not found.");
+        builder.Services.AddDbContext<IMDBContext>(options => options.UseSqlServer(connectionString));
+
         builder.Services.AddControllersWithViews();
 
         var app = builder.Build();
+
+
+
+
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
