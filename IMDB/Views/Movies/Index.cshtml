@@ -10,5 +10,28 @@
     <a asp-action="Create">Create New</a>
 </p>
 
+
+<form asp-action="Filter" method="get">
+    <div class="input-group mb-3">
+        <input type="text"
+               class="form-control"
+               name="title"
+               placeholder="Search title" />
+
+        <select class="form-select"
+                name="genre"
+                asp-items="@Html.GetEnumSelectList<Genre>()">
+            <option value="">Please select genre</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">
+            Search
+        </button>
+    </div>
+</form>
+
+
+
+
 <partial name="_MovieListPartial" model="Model" />
 

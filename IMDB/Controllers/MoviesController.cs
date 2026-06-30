@@ -18,6 +18,19 @@ public class MoviesController : Controller
         return View(await _context.Movie.ToListAsync());
     }
 
+    public async Task<IActionResult> Filter(string? title, int? genre)
+    {
+        var model = string.IsNullOrWhiteSpace(title) ?
+                        _context.Movie :
+                        _context.Movie.Where(m => m.Title.StartsWith(title.Trim()));
+
+        model = genre.HasValue ?
+                        model.Where(m => (int)m.Genre == genre) :
+                        model;
+
+        return View(nameof(Index), await model.ToListAsync());
+    }
+
     // GET: MOVIES/Details/5
     public async Task<IActionResult> Details(int? id)
     {
