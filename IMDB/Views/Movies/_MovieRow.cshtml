@@ -1,0 +1,21 @@
+﻿@model Movie
+
+<tr>
+    <td>
+        @Html.DisplayFor(model => Model.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(model => Model.ReleaseDate)
+    </td>
+    <td>
+        @Html.DisplayFor(model => Model.Genre)
+    </td>
+    <td>
+        @Html.DisplayFor(model => Model.Rating)
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Details" asp-route-id="@Model.Id">Details</a> |
+        <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    </td>
+</tr>
