@@ -15,5 +15,5 @@ public class Movie
     public Genre Genre { get; set; }
 
     [Range(1, 10)]
-    public int Rating { get; set; }
+    public float Rating { get; set; }
 }
