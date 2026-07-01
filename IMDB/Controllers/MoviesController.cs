@@ -70,8 +70,12 @@ public class MoviesController : Controller
         var model = new MoviesViewModel
         {
             Movies = movies,
-            Genres = await GetGenresAsync()
+            Genres = await GetGenresAsync(),
+            Title = viewModel.Title,
+            Genre = viewModel.Genre,
         };
+
+        //ModelState.Clear();
 
         return View(nameof(IndexWithViewModel), model);
     }

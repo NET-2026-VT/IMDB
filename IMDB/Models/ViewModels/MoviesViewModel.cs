@@ -1,5 +1,6 @@
 ﻿using IMDB.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace IMDB.Models.ViewModels;
 
