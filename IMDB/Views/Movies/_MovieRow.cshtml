@@ -14,9 +14,9 @@
         @* @Html.DisplayFor(model => Model.Rating) *@
        @*  @await Component.InvokeAsync("Star", new {rating = Model.Rating}) *@
       
-       <vc:star rating="Model.Rating"/>
+       @* <vc:star rating="Model.Rating"/> *@
        
-     @*   <star rating="Model.Rating"></star> *@
+       <star rating="Model.Rating"></star>
 
     </td>
     <td>
