@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Index";
-
+    string? selectedTitle = Context.Request.Query["title"].ToString();
+    string? selectedGenre = Context.Request.Query["genre"].ToString();
 }
 
 <h1>Index</h1>
@@ -17,11 +18,23 @@
         <input type="text"
                class="form-control"
                name="title"
+               value="@selectedTitle"
                placeholder="Search title" />
 
         <select class="form-select"
-                name="genre"
-                asp-items="@Html.GetEnumSelectList<Genre>()">
+                name="genre">
+            <option value="">Please select genre</option>
+            @foreach (var genre in Html.GetEnumSelectList<Genre>())
+            {
+                if (genre.Value == selectedGenre)
+                {
+                    <option value="@genre.Value" selected>@genre.Text</option>
+                }
+                else
+                {
+                    <option value="@genre.Value">@genre.Text</option>
+                }
+            }
             <option value="">Please select genre</option>
         </select>
 
