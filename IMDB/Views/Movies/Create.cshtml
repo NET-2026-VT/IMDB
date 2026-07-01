@@ -1,4 +1,4 @@
-@model IMDB.Models.Entities.Movie
+@model Movie
 
 @{
     ViewData["Title"] = "Create";
@@ -27,7 +27,10 @@
 
             <div class="form-group">
                 <label asp-for="Genre" class="control-label"></label>
-                <input asp-for="Genre" class="form-control" />
+               @*  <input asp-for="Genre" class="form-control" /> *@
+               <select asp-for="Genre" class="form-select" asp-items="@Html.GetEnumSelectList<Genre>()">
+               <option value="">Please select genre</option>
+               </select>
                 <span asp-validation-for="Genre" class="text-danger"></span>
             </div>
 

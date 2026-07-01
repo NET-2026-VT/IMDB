@@ -20,9 +20,9 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (Movie movie in Model)
         {
-            <partial name="_MovieRow" model="item" />
+            <partial name="_MovieRow" model="movie" />
         }
     </tbody>
 </table>
