@@ -8,6 +8,10 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        //builder.Services.AddSingleton => Samma instans under hela applikationens livslängd
+        //builder.Services.AddScoped => Samma instans för hela requestet. Alla services som kräver ett context måste vara scoped
+        //builder.Transient => Ny instans varje gång man behöver använda den. 
+
         var connectionString = builder.Configuration.GetConnectionString("IMDBContext") ?? throw new InvalidOperationException("Connection string 'IMDBContext' not found.");
         builder.Services.AddDbContext<IMDBContext>(options => options.UseSqlServer(connectionString));
 
