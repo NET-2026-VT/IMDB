@@ -4,14 +4,17 @@ using Microsoft.EntityFrameworkCore;
 using IMDB.Models.Entities;
 using IMDB.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using IMDB.Services;
 
 public class MoviesController : Controller
 {
     private readonly IMDBContext _context;
+    private readonly IGenreSelectListService _genreSelectList;
 
-    public MoviesController(IMDBContext context)
+    public MoviesController(IMDBContext context, IGenreSelectListService genreSelectList)
     {
         _context = context;
+        this._genreSelectList = genreSelectList;
     }
 
     // GET: MOVIES
@@ -32,13 +35,7 @@ public class MoviesController : Controller
         var model = new MoviesViewModel
         {
             Movies = movies,
-            Genres = movies.Select(m => m.Genre)
-                           .Distinct()
-                           .Select(g => new SelectListItem
-                           {
-                               Text = g.ToString(),
-                               Value = g.ToString()
-                           })
+            Genres = _genreSelectList.GetGenres(movies)
         };
    
         return View(model);
@@ -70,7 +67,7 @@ public class MoviesController : Controller
         var model = new MoviesViewModel
         {
             Movies = await movies.ToListAsync(),
-            Genres = await GetGenresAsync(),
+            Genres = await _genreSelectList.GetGenresAsync(),
             Title = viewModel.Title,
             Genre = viewModel.Genre,
         };
@@ -78,19 +75,6 @@ public class MoviesController : Controller
         //ModelState.Clear();
 
         return View(nameof(IndexWithViewModel), model);
-    }
-
-    private async Task<IEnumerable<SelectListItem>> GetGenresAsync()
-    {
-        return await _context.Movie
-                           .Select(m => m.Genre)
-                           .Distinct()
-                           .Select(g => new SelectListItem
-                           {
-                               Text = g.ToString(),
-                               Value = g.ToString()
-                           })
-                           .ToListAsync();
     }
 
     // GET: MOVIES/Details/5

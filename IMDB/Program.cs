@@ -1,4 +1,5 @@
 using IMDB.Models.Entities;
+using IMDB.Services;
 using Microsoft.EntityFrameworkCore;
 
 internal class Program
@@ -14,6 +15,8 @@ internal class Program
 
         var connectionString = builder.Configuration.GetConnectionString("IMDBContext") ?? throw new InvalidOperationException("Connection string 'IMDBContext' not found.");
         builder.Services.AddDbContext<IMDBContext>(options => options.UseSqlServer(connectionString));
+
+        builder.Services.AddScoped<IGenreSelectListService, GenreSelectListService>();
 
         builder.Services.AddControllersWithViews();
 
