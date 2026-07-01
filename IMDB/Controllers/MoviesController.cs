@@ -17,6 +17,12 @@ public class MoviesController : Controller
     // GET: MOVIES
     public async Task<IActionResult> Index()    
     {
+        //ViewBag.Test = "Hej";
+        //ViewBag.Testing = "Hej";
+        //ViewData["Test2"] = "Hej2";
+       
+        //TempData["Test3"] = "Hej4";
+
         return View(await _context.Movie.ToListAsync());
     }
     public async Task<IActionResult> IndexWithViewModel()    
@@ -49,6 +55,38 @@ public class MoviesController : Controller
                         model;
 
         return View(nameof(Index), await model.ToListAsync());
+    }
+
+    public async Task<IActionResult> FilterViewModel(MoviesViewModel viewModel)
+    {
+        IQueryable<Movie> movies = _context.Movie;
+
+        if(!string.IsNullOrWhiteSpace(viewModel.Title))
+                   movies = movies.Where(m => m.Title.StartsWith(viewModel.Title.Trim()));
+
+        if(viewModel.Genre.HasValue)
+                    movies = movies.Where(m => m.Genre == viewModel.Genre);
+
+        var model = new MoviesViewModel
+        {
+            Movies = movies,
+            Genres = await GetGenresAsync()
+        };
+
+        return View(nameof(IndexWithViewModel), model);
+    }
+
+    private async Task<IEnumerable<SelectListItem>> GetGenresAsync()
+    {
+        return await _context.Movie
+                           .Select(m => m.Genre)
+                           .Distinct()
+                           .Select(g => new SelectListItem
+                           {
+                               Text = g.ToString(),
+                               Value = g.ToString()
+                           })
+                           .ToListAsync();
     }
 
     // GET: MOVIES/Details/5

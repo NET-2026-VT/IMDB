@@ -10,15 +10,15 @@
 </p>
 
 
-<form asp-action="Filter" method="get">
+<form asp-action="FilterViewModel" method="get">
     <div class="input-group mb-3">
         <input type="text"
                class="form-control"
-               name="title"
+               asp-for="Title"
                placeholder="Search title" />
 
         <select class="form-select"
-                name="genre"
+                asp-for="Genre"
                 asp-items="Model.Genres">
             <option value="">Please select genre</option>
         </select>
