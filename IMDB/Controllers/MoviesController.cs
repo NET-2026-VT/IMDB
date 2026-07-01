@@ -69,7 +69,7 @@ public class MoviesController : Controller
 
         var model = new MoviesViewModel
         {
-            Movies = movies,
+            Movies = await movies.ToListAsync(),
             Genres = await GetGenresAsync(),
             Title = viewModel.Title,
             Genre = viewModel.Genre,
