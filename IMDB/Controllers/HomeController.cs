@@ -1,4 +1,5 @@
 using IMDB.Models;
+using IMDB.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

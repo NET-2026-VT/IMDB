@@ -1,4 +1,4 @@
-namespace IMDB.Models;
+namespace IMDB.Models.ViewModels;
 
 public class ErrorViewModel
 {

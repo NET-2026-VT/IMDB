@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IMDB.Models.Entities;
+using IMDB.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class MoviesController : Controller
 {
@@ -16,6 +18,24 @@ public class MoviesController : Controller
     public async Task<IActionResult> Index()    
     {
         return View(await _context.Movie.ToListAsync());
+    }
+    public async Task<IActionResult> IndexWithViewModel()    
+    {
+        var movies = await _context.Movie.ToListAsync();
+
+        var model = new MoviesViewModel
+        {
+            Movies = movies,
+            Genres = movies.Select(m => m.Genre)
+                           .Distinct()
+                           .Select(g => new SelectListItem
+                           {
+                               Text = g.ToString(),
+                               Value = g.ToString()
+                           })
+        };
+   
+        return View(model);
     }
 
     public async Task<IActionResult> Filter(string? title, int? genre)
