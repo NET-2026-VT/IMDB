@@ -11,7 +11,8 @@
         @Html.DisplayFor(model => Model.Genre)
     </td>
     <td>
-        @Html.DisplayFor(model => Model.Rating)
+        @* @Html.DisplayFor(model => Model.Rating) *@
+        @await Component.InvokeAsync("Star", new {rating = Model.Rating})
     </td>
     <td>
         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

@@ -1,0 +1,14 @@
+﻿@using IMDB.ViewComponents
+
+@model StarViewModel
+
+<span class="star">
+    @for (int i = 0; i < Model.Stars; i++)
+    {
+        <img src="@Model.FullStarUrl" />
+    }
+    @if (Model.IsHalfStar)
+    {
+        <img src="@Model.HalfStarUrl" />
+    }
+</span>
