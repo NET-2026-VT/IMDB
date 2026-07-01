@@ -1,0 +1,35 @@
+﻿@using IMDB.Services
+@model MoviesViewModel2
+@inject IGenreSelectListService genreService
+
+@{
+    ViewData["Title"] = "IndexWithViewModel";
+}
+
+<h1>IndexWithoutGenres</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<form asp-action="Filter3" method="get">
+    <div class="input-group mb-3">
+        <input type="text"
+               class="form-control"
+               asp-for="Title"
+               placeholder="Search title" />
+
+        <select class="form-select"
+                asp-for="Genre"
+                asp-items="@await genreService.GetGenresAsync()">
+            <option value="">Please select genre</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">
+            Search
+        </button>
+    </div>
+</form>
+
+<partial name="_MovieListPartial" model="Model.Movies" />

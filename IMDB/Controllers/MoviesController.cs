@@ -40,6 +40,19 @@ public class MoviesController : Controller
    
         return View(model);
     }
+    public async Task<IActionResult> IndexWithoutGenres()    
+    {
+        var movies = await _context.Movie.ToListAsync();
+
+        var model = new MoviesViewModel2
+        {
+            Movies = movies,
+        };
+   
+        return View(model);
+    }
+
+
 
     public async Task<IActionResult> Filter(string? title, int? genre)
     {
@@ -75,6 +88,27 @@ public class MoviesController : Controller
         //ModelState.Clear();
 
         return View(nameof(IndexWithViewModel), model);
+    }
+    public async Task<IActionResult> Filter3(MoviesViewModel2 viewModel)
+    {
+        IQueryable<Movie> movies = _context.Movie;
+
+        if(!string.IsNullOrWhiteSpace(viewModel.Title))
+                   movies = movies.Where(m => m.Title.StartsWith(viewModel.Title.Trim()));
+
+        if(viewModel.Genre.HasValue)
+                    movies = movies.Where(m => m.Genre == viewModel.Genre);
+
+        var model = new MoviesViewModel2
+        {
+            Movies = await movies.ToListAsync(),
+            Title = viewModel.Title,
+            Genre = viewModel.Genre,
+        };
+
+        //ModelState.Clear();
+
+        return View(nameof(IndexWithoutGenres), model);
     }
 
     // GET: MOVIES/Details/5
